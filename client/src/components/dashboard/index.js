@@ -78,7 +78,7 @@ const Dashboard = () => {
       </div>
       <div className='w-11/12 mx-auto'>
         {/* product card */}
-        <section className='col-span-9 ml-3'>
+        <section>
           <ProductCard products={apiData} addToCart={addToCart} />
         </section>
       </div>

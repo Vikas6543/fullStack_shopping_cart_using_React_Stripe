@@ -76,7 +76,7 @@ const Cart = () => {
                   <th className='px-6 py-3 font-bold whitespace-nowrap'>
                     Image
                   </th>
-                  <th className='px-6 py-3 font-bold whitespace-nowrap'>
+                  <th className='px-6 py-3 font-bold whitespace-nowrap hidden md:block'>
                     Product
                   </th>
                   <th className='px-6 py-3 font-bold whitespace-nowrap'>Qty</th>
@@ -104,7 +104,7 @@ const Cart = () => {
                     </td>
 
                     {/* product name  */}
-                    <td className='p-4 px-6 text-center whitespace-nowrap'>
+                    <td className='p-4 px-6 text-center whitespace-nowrap hidden md:inline'>
                       <div className='flex flex-col items-center justify-center'>
                         <h3>{product.title.substr(0, 18) + '...'}</h3>
                       </div>

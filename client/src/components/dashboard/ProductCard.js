@@ -6,7 +6,7 @@ const ProductCard = ({ products, addToCart }) => {
   const { cart } = useSelector((state) => state.products);
 
   return (
-    <div className='grid grid-cols-12 gap-8 relative'>
+    <div className='grid grid-cols-12 gap-4 md:gap-8 relative'>
       {products.length > 0 ? (
         products.map((product) => (
           <div
