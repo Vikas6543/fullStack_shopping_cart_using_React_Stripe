@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cart } = useSelector((state) => state.products);
+  const user = JSON.parse(localStorage.getItem('userInfo'));
 
   const cartTotal = () => {
     return cart.reduce((total, product) => {
@@ -28,12 +31,22 @@ const Cart = () => {
 
   const checkoutHandler = async () => {
     setLoading(true);
+    if (!user) {
+      navigate('/login');
+    }
+
     try {
       const result = await Axios.post(
-        'http://localhost:5000/api/payment-checkout',
+        'http://localhost:5000/payment/checkout',
         {
-          email: 'vikas100@gmail.com',
+          id: user.user._id,
           cart,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: user.token,
+          },
         }
       );
       if (result.data.url) {
@@ -41,6 +54,7 @@ const Cart = () => {
         window.open(result.data.url, '_blank');
       }
     } catch (error) {
+      alert(error.response.data.message);
       setLoading(false);
       console.log(error);
     }

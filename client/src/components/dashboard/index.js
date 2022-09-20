@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
 const Dashboard = () => {
@@ -9,6 +10,9 @@ const Dashboard = () => {
   const [textInput, setTextInput] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('session_id');
   toast.configure();
 
   const fetchProducts = async () => {
@@ -31,9 +35,27 @@ const Dashboard = () => {
     }
   };
 
+  const verifyPayment = async () => {
+    try {
+      const { data } = await Axios.get(
+        `http://localhost:5000/payment/verify-payment/${id}`
+      );
+      toast.success(data.message);
+      navigate('/');
+    } catch (error) {
+      toast.error(error.response.data);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, [textInput]);
+
+  useEffect(() => {
+    if (id) {
+      verifyPayment();
+    }
+  }, [id]);
 
   const addToCart = (item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
