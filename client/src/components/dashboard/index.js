@@ -8,6 +8,7 @@ import ProductCard from './ProductCard';
 const Dashboard = () => {
   const [apiData, setApiData] = useState([]);
   const [textInput, setTextInput] = useState('');
+  const user = JSON.parse(localStorage.getItem('cart_stripe_user'));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +57,12 @@ const Dashboard = () => {
       verifyPayment();
     }
   }, [id]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, []);
 
   const addToCart = (item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });

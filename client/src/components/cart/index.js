@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
@@ -9,7 +9,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cart } = useSelector((state) => state.products);
-  const user = JSON.parse(localStorage.getItem('userInfo'));
+  const user = JSON.parse(localStorage.getItem('cart_stripe_user'));
 
   const cartTotal = () => {
     return cart.reduce((total, product) => {
@@ -31,9 +31,6 @@ const Cart = () => {
 
   const checkoutHandler = async () => {
     setLoading(true);
-    if (!user) {
-      navigate('/login');
-    }
 
     try {
       const result = await Axios.post(
@@ -49,9 +46,9 @@ const Cart = () => {
           },
         }
       );
-      if (result.data.url) {
+      if (result?.data?.url) {
         setLoading(false);
-        window.open(result.data.url, '_blank');
+        window.open(result?.data?.url, '_blank');
       }
     } catch (error) {
       alert(error.response.data.message);
@@ -59,6 +56,12 @@ const Cart = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <div className='mx-4 md:mx-24 lg:mx-44 mt-8'>

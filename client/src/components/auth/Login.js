@@ -16,8 +16,10 @@ const Login = () => {
         email,
         password,
       });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate('/cart');
+      if (data) {
+        localStorage.setItem('cart_stripe_user', JSON.stringify(data));
+        navigate('/');
+      }
     } catch (error) {
       setError(error.response.data.message);
     }
