@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await Axios.post('http://localhost:5000/user/register', {
+      await Axios.post('https://react-cart-stripe.onrender.com/user/register', {
         name,
         email,
         password,

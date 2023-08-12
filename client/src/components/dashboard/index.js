@@ -39,7 +39,7 @@ const Dashboard = () => {
   const verifyPayment = async () => {
     try {
       const { data } = await Axios.get(
-        `http://localhost:5000/payment/verify-payment/${id}`
+        `https://react-cart-stripe.onrender.com/verify-payment/${id}`
       );
       toast.success(data.message);
       navigate('/');

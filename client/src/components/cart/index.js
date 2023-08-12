@@ -34,7 +34,7 @@ const Cart = () => {
 
     try {
       const result = await Axios.post(
-        'http://localhost:5000/payment/checkout',
+        'https://react-cart-stripe.onrender.com/payment/checkout',
         {
           id: user.user._id,
           cart,
