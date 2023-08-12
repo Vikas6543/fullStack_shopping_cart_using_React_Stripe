@@ -12,10 +12,13 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Axios.post('http://localhost:5000/user/login', {
-        email,
-        password,
-      });
+      const { data } = await Axios.post(
+        'https://react-cart-stripe.onrender.com/user/login',
+        {
+          email,
+          password,
+        }
+      );
       if (data) {
         localStorage.setItem('cart_stripe_user', JSON.stringify(data));
         navigate('/');
