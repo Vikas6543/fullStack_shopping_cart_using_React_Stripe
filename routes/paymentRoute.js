@@ -71,8 +71,9 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
 
     customer: customer.id,
     mode: 'payment',
-    success_url: 'http://localhost:3000/?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: 'http://localhost:3000/cart',
+    success_url:
+      'https://react-cart-stripe.onrender.com/?session_id={CHECKOUT_SESSION_ID}',
+    cancel_url: 'https://react-cart-stripe.onrender.com/cart',
   });
 
   res.json({ url: session.url });
